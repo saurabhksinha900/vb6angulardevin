@@ -1,0 +1,54 @@
+<div class="login-container">
+  <div class="theme-toggle-corner">
+    <button class="btn-icon" (click)="toggleTheme()" [title]="isDark() ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+      {{ isDark() ? '☀️' : '🌙' }}
+    </button>
+  </div>
+
+  <div class="login-card">
+    <div class="login-header">
+      <h1>{{ appName }}</h1>
+      <p class="subtitle">Please sign in to continue</p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          placeholder="Enter your username"
+          autocomplete="username"
+          [disabled]="isLoading"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="credential">Password</label>
+        <input
+          type="password"
+          id="credential"
+          [(ngModel)]="credential"
+          name="credential"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+          [disabled]="isLoading"
+        />
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" class="btn-primary btn-full" [disabled]="isLoading">
+        {{ isLoading ? 'Signing in...' : 'Sign In' }}
+      </button>
+    </form>
+
+    <div class="demo-hint">
+      <p>Demo accounts: {{ demoHint }}</p>
+    </div>
+  </div>
+</div>

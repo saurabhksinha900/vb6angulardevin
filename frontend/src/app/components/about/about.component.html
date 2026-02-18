@@ -1,0 +1,39 @@
+<div class="modal-backdrop" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>About</h2>
+      <button class="btn-icon close-btn" (click)="onClose()">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="about-info">
+        <h3>{{ appInfo.NAME }}</h3>
+        <p class="version">Version {{ appInfo.VERSION }}</p>
+        <p class="description">{{ appInfo.DESCRIPTION }}</p>
+
+        <div class="info-section">
+          <div class="info-row">
+            <span class="info-label">Original Platform:</span>
+            <span class="info-value">{{ appInfo.ORIGINAL }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Current Framework:</span>
+            <span class="info-value">{{ appInfo.FRAMEWORK }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Migrated By:</span>
+            <span class="info-value">{{ appInfo.MIGRATED_BY }}</span>
+          </div>
+        </div>
+
+        <div class="migration-note">
+          <p>This application was migrated from Visual Basic 6.0 to Angular 19 with full feature parity including role-based access control, inventory management, reporting, and dark/light theme support.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-primary" (click)="onClose()">Close</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="dashboard-container">
+  <header class="top-bar">
+    <div class="top-bar-left">
+      <h1>Inventory Management</h1>
+    </div>
+    <div class="top-bar-right">
+      <span class="user-info">{{ currentUser?.fullName }} ({{ getRoleName() }})</span>
+      <button class="btn-icon" (click)="toggleTheme()" [title]="isDark() ? 'Light Mode' : 'Dark Mode'">
+        {{ isDark() ? '☀️' : '🌙' }}
+      </button>
+      <button class="btn-secondary btn-sm" (click)="openReports()">Reports</button>
+      <button class="btn-secondary btn-sm" (click)="openAbout()">About</button>
+      <button class="btn-danger btn-sm" (click)="logout()">Logout</button>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="search-section">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+        placeholder="Search by name or SKU..."
+        class="search-input"
+      />
+      <select [(ngModel)]="selectedCategory" (ngModelChange)="onCategoryChange()" class="category-select">
+        <option [ngValue]="null">All Categories</option>
+        <option *ngFor="let cat of categories" [ngValue]="cat.value">{{ cat.name }}</option>
+      </select>
+      <button class="btn-secondary btn-sm" (click)="clearFilters()">Clear</button>
+    </div>
+    <div class="action-section" *ngIf="canEdit()">
+      <button class="btn-primary" (click)="addProduct()">+ Add Product</button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="product-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>SKU</th>
+          <th>Product Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>Reorder Level</th>
+          <th>Total Value</th>
+          <th>Status</th>
+          <th *ngIf="canEdit()">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let product of filteredProducts"
+          [class.low-stock]="isLowStock(product)"
+          [class.out-of-stock]="isOutOfStock(product)"
+        >
+          <td>{{ product.productId }}</td>
+          <td class="sku-cell">{{ product.sku }}</td>
+          <td>{{ product.productName }}</td>
+          <td>{{ getCategoryName(product.category) }}</td>
+          <td class="number-cell">{{ formatCurrency(product.unitPrice) }}</td>
+          <td class="number-cell">{{ product.quantityInStock }}</td>
+          <td class="number-cell">{{ product.reorderLevel }}</td>
+          <td class="number-cell">{{ formatCurrency(getTotalValue(product)) }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="{
+              'status-in-stock': !isLowStock(product) && !isOutOfStock(product),
+              'status-low-stock': isLowStock(product),
+              'status-out-of-stock': isOutOfStock(product)
+            }">
+              {{ getStockStatus(product) }}
+            </span>
+          </td>
+          <td *ngIf="canEdit()">
+            <div class="action-buttons">
+              <button class="btn-secondary btn-xs" (click)="editProduct(product)">Edit</button>
+              <button class="btn-danger btn-xs" *ngIf="canDelete()" (click)="deleteProduct(product)">Delete</button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="filteredProducts.length === 0">
+          <td [attr.colspan]="canEdit() ? 10 : 9" class="empty-message">
+            No products found.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer class="status-bar">
+    <span>Products: {{ getProductCount() }}</span>
+    <span>Total Value: {{ formatCurrency(getTotalInventoryValue()) }}</span>
+    <span>Low Stock: {{ getLowStockCount() }}</span>
+    <span>Showing: {{ filteredProducts.length }} items</span>
+  </footer>
+
+  <app-report *ngIf="showReportModal" (close)="closeReports()"></app-report>
+  <app-about *ngIf="showAboutModal" (close)="closeAbout()"></app-about>
+</div>

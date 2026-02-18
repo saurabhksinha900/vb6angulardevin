@@ -1,0 +1,31 @@
+<div class="modal-backdrop" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Reports</h2>
+      <button class="btn-icon close-btn" (click)="onClose()">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="report-controls">
+        <div class="form-group">
+          <label for="reportType">Report Type</label>
+          <select id="reportType" [(ngModel)]="selectedReportType">
+            <option *ngFor="let rt of reportTypes" [ngValue]="rt.value">{{ rt.name }}</option>
+          </select>
+        </div>
+        <div class="report-buttons">
+          <button class="btn-primary" (click)="generateReport()">Generate</button>
+          <button class="btn-secondary" (click)="exportReport()" [disabled]="!reportContent">Export to Text</button>
+        </div>
+      </div>
+
+      <div class="report-output" *ngIf="reportContent">
+        <pre>{{ reportContent }}</pre>
+      </div>
+
+      <div class="report-placeholder" *ngIf="!reportContent">
+        <p>Select a report type and click Generate to view the report.</p>
+      </div>
+    </div>
+  </div>
+</div>
