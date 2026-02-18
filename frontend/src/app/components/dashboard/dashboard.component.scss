@@ -1,0 +1,206 @@
+.dashboard-container {
+  min-height: 100vh;
+  background-color: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+
+  h1 {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .user-info {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  .search-section {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .search-input {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    min-width: 250px;
+    transition: border-color 0.2s ease;
+
+    &::placeholder {
+      color: var(--text-muted);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--btn-primary-bg);
+      box-shadow: 0 0 0 3px var(--focus-ring);
+    }
+  }
+
+  .category-select {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: var(--btn-primary-bg);
+    }
+  }
+}
+
+.table-container {
+  flex: 1;
+  overflow-x: auto;
+  padding: 0 1.5rem;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-primary);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+
+  th {
+    background-color: var(--table-header-bg);
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 2px solid var(--border-color);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 0.6rem 1rem;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  tbody tr {
+    transition: background-color 0.15s ease;
+
+    &:hover {
+      background-color: var(--table-hover-bg);
+    }
+
+    &.low-stock {
+      background-color: var(--low-stock-bg);
+
+      &:hover {
+        background-color: var(--low-stock-hover-bg);
+      }
+    }
+
+    &.out-of-stock {
+      background-color: var(--out-of-stock-bg);
+
+      &:hover {
+        background-color: var(--out-of-stock-hover-bg);
+      }
+    }
+  }
+
+  .sku-cell {
+    font-family: monospace;
+    font-size: 0.8rem;
+  }
+
+  .number-cell {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .empty-message {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 2rem;
+    font-style: italic;
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &.status-in-stock {
+    background-color: var(--status-ok-bg);
+    color: var(--status-ok-text);
+  }
+
+  &.status-low-stock {
+    background-color: var(--status-warn-bg);
+    color: var(--status-warn-text);
+  }
+
+  &.status-out-of-stock {
+    background-color: var(--status-error-bg);
+    color: var(--status-error-text);
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.375rem;
+}
+
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1.5rem;
+  background-color: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+
+  span {
+    padding: 0 0.5rem;
+  }
+}

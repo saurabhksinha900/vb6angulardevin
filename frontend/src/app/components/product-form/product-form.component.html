@@ -1,0 +1,117 @@
+<div class="form-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h2>{{ isEditMode ? 'Edit Product' : 'Add New Product' }}</h2>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="product-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="productName">Product Name *</label>
+          <input
+            type="text"
+            id="productName"
+            [(ngModel)]="product.productName"
+            name="productName"
+            placeholder="Enter product name"
+            [maxlength]="validation.PRODUCT_NAME_MAX"
+          />
+        </div>
+      </div>
+
+      <div class="form-row two-col">
+        <div class="form-group">
+          <label for="sku">SKU *</label>
+          <div class="input-with-button">
+            <input
+              type="text"
+              id="sku"
+              [(ngModel)]="product.sku"
+              name="sku"
+              placeholder="XXX-XXXX-XXXX"
+              [maxlength]="validation.SKU_LENGTH"
+            />
+            <button type="button" class="btn-secondary btn-sm" (click)="generateSku()">Generate</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="category">Category *</label>
+          <select id="category" [(ngModel)]="product.category" name="category" (ngModelChange)="onCategoryChange()">
+            <option *ngFor="let cat of categories" [ngValue]="cat.value">{{ cat.name }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            [(ngModel)]="product.description"
+            name="description"
+            placeholder="Enter product description"
+            rows="3"
+            [maxlength]="validation.DESCRIPTION_MAX"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="form-row three-col">
+        <div class="form-group">
+          <label for="unitPrice">Unit Price ($) *</label>
+          <input
+            type="number"
+            id="unitPrice"
+            [(ngModel)]="product.unitPrice"
+            name="unitPrice"
+            [min]="validation.PRICE_MIN"
+            [max]="validation.PRICE_MAX"
+            step="0.01"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="quantityInStock">Quantity *</label>
+          <input
+            type="number"
+            id="quantityInStock"
+            [(ngModel)]="product.quantityInStock"
+            name="quantityInStock"
+            [min]="validation.QUANTITY_MIN"
+            [max]="validation.QUANTITY_MAX"
+            step="1"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="reorderLevel">Reorder Level *</label>
+          <input
+            type="number"
+            id="reorderLevel"
+            [(ngModel)]="product.reorderLevel"
+            name="reorderLevel"
+            [min]="validation.REORDER_MIN"
+            [max]="validation.REORDER_MAX"
+            step="1"
+          />
+        </div>
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <div class="success-message" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">
+          {{ isEditMode ? 'Update Product' : 'Add Product' }}
+        </button>
+        <button type="button" class="btn-secondary" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
